@@ -1,0 +1,101 @@
+syntax = "proto2";
+package protocol;
+
+enum NodeCmd{
+    NODE_CMD_MKNEW_APP = 1001;
+  NODE_CMD_MKNEW_APP_RSP= 1002;
+  NODE_CMD_START= 1003;
+  NODE_CMD_START_RSP= 1004;
+  NODE_CMD_STOP= 1005 ;
+  NODE_CMD_STOP_RSP= 1006;
+  NODE_CMD_RESTART= 1007 ;
+  NODE_CMD_RESTART_RSP= 1008;
+  NODE_CMD_PUSH_FILE= 1009 ;
+  NODE_CMD_PUSH_FILE_RSP= 1010 ;
+  NODE_CMD_SHELL= 1011 ;
+  NODE_CMD_SHELL_RSP= 1012 ;
+  NODE_CMD_PUB_PKG= 1013 ;
+  NODE_CMD_PUB_PKG_RSP= 1014 ;
+  NODE_CMD_NODE2CENTER_HEARTBEAT= 1015 ;
+  NODE_CMD_NODE2CENTER_HEARTBEAT_RSP= 1016 ;
+  NODE_CMD_SERVER2CENTER_HEARTBEAT= 1017;
+  NODE_CMD_SERVER2CENTER_HEARTBEAT_RSP= 1018;
+  NODE_CMD_SERVER2NODE_HEARTBEAT= 1019;
+  NODE_CMD_SERVER2NODE_HEARTBEAT_RSP= 1020;
+}
+
+enum ServerStatus{
+    SERVER_STATUS_MKNEW = 3001;//新创建
+    SERVER_STATUS_RUNNING = 3002;//运行中
+    SERVER_STATUS_MANUAL_STOPED = 3003;//人为停止
+    SERVER_STATUS_STOPED =  3004;//挂掉了
+    SERVER_STATUS_OFFLINE = 3005;//下线
+}
+
+
+message AppServerInfo
+{
+    required int32 port = 1;
+    required string strServerName = 2;
+    required string strInstId = 3;
+    required string path = 4;
+}
+
+message NodeMkNewAppReqPkg
+{
+    required string path = 1;
+    required string centerUrl = 2;
+    required AppServerInfo appInfo =3;
+}
+
+
+message NodeMkNewAppRspPkg
+{
+    required int32 ret = 1;
+}
+
+message NodeStartReqPkg
+{
+    required string path = 1;
+    required AppServerInfo appInfo =2;
+}
+
+message NodeStartRspPkgs
+{
+    required int32 ret = 1;
+
+}
+
+message NodeStopReqPkg
+{
+    required string path = 1;
+    required AppServerInfo appInfo =2;
+}
+
+message NodeStopRspPkgs
+{
+    required int32 ret = 1;
+
+}
+
+//节点到中心的心跳包，有可能携带APP信息
+message Node2CenterHeartBeatReqPkg
+{
+    required string strInnerip = 1;
+    required string strOther = 2;
+    optional AppServerInfo appInfo = 3;
+
+}
+
+message Server2NodeHeartBeatReqPkg
+{
+    required string strInnerip = 1;
+    required AppServerInfo appInfo = 2;
+}
+
+message NodeServerPkg
+{
+    required int32 cmd = 1;
+    required uint64 seq = 2;
+    required bytes data = 3;
+}

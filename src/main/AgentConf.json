@@ -1,0 +1,7 @@
+{
+  "StrOuterIp": "10.20.104.149",
+  "StrInnerIp": "10.20.104.146",
+  "StrWorkDir": "/home/dev",
+  "StrHttpPort": "0.0.0.0:9699",
+  "StrCenterUrl":"http://10.20.104.175:9015/agent"
+}
